@@ -39,7 +39,8 @@ ui <- function() {
             id = "review_summary",
             bslib::card(
             shiny::htmlOutput("paper_title_output"),
-            shiny::htmlOutput("reviewer_name_output")
+            shiny::htmlOutput("reviewer_name_output"),
+            shiny::htmlOutput("journal_name_output")
           )
           ),
           bslib::card(
@@ -53,41 +54,67 @@ ui <- function() {
       h4("Stage 1: Data and metadata must be archived and adhere to FAIR guiding principles")
       ),
       create_card("1", "Data are in a public repository"),
+      br(),
       create_card("2", "Data repository has a persistent identifier (e.g., a DOI)"),
+      br(),
       create_card("3", "Data are cited in the manuscript (in data availability statement or similar, as well as in the Literature Cited)"),
+      br(),
       create_card("4", "Data repository has a data-specific license"),
+      br(),
       create_card("6", "All necessary data files are present in the repository"),
+      br(),
       create_card("7", "Data are contained in an interoperable format"),
+      br(),
       create_card("8", "Metadata present (including README file)"),
+      br(),
       create_card("9", "Metadata adequate (including README file)"),
+      br(),
+      br(),
       div(id = "stage2_title",
       h4("Stage 2: Archived data corresponds with the data reported in the manuscript")
       ),
       create_card("10", "Variables used in analysis present in the data"),
+      br(),
       create_card("11", "The structure of the data presented matches the manuscript (e.g., it is the right size, do the number of levels of a factor match)"),
+      br(),
+      br(),
       div(id = "stage3_title",
       h4("Stage 3: Code and metadata must be archived and adhere to FAIR guiding principles")
       ),
       create_card("12", "Code has a repository"),
+      br(),
       create_card("13", "Code repository has a DOI"),
+      br(),
       create_card("14", "Code is cited in manuscript  (in data availability statement or similar, as well as in the Literature Cited)"),
+      br(),
       create_card("15", "Code repository has a code-specific license"),
+      br(),
       create_card("16", "Code files are present in the repository"),
+      br(),
       create_card("17", "Code is contained in an interoperable format e.g. .R, .py., .txt, .rmd, .jl"),
+      br(),
       create_card("18", "Metadata present (README file and annotations in code)"),
+      br(),
       create_card("19", "Metadata adequate"),
+      br(),
+      br(),
       div(id = "stage4_title",
       h4("Stage 4: Archived code matches the manuscript")
       ),
       create_card("20", "Code is present for all analyses in the manuscript, along with code used to produce figures/tables where appropriate"),
+      br(),
+      br(),
       div(id = "stage5_title",
       h4("Stage 5: Archived code runs with the archived data")
       ),
       create_card("21", "Runs with minimal changes (e.g.changing file paths)"),
+      br(),
+      br(),
       div(id = "stage6_title",
       h4("Stage 6: Results can be computationally reproduced by running the archived code")
       ),
       create_card("22", "Numeric results (in table or text)"),
+      br(),
       create_card("23", "Figures")
     )
     )

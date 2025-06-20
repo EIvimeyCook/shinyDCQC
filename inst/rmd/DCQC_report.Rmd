@@ -6,11 +6,14 @@ output: pdf_document
 params:
   paper_title: "Example Paper"
   reviewer_name: "Example Reviewer"
+  journal_name: "Example Journal"
   report_date: !r Sys.Date()
   card_data: !r list()
 ---
 
 **`r params$paper_title`**
+
+*`r params$journal_name`*
 
 ---
 

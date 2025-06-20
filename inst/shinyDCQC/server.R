@@ -30,6 +30,7 @@ server <- function(input, output, session) {
       params <- list(
         paper_title = input$paper_title,
         reviewer_name = input$reviewer_name,
+        journal_name = input$journal_name,
         report_date = Sys.Date(),
         card_data = card_data
       )
@@ -55,6 +56,7 @@ server <- function(input, output, session) {
       shiny::tags$img(src = "circle_black.png", height = "88px", width = "88px", style = "margin-bottom: 20px;"),
       textInput("paper_title", strong("Paper Title"), placeholder = "Enter paper name", width = "300px"),
       textInput("reviewer_name", strong("Reviewer Name"), placeholder = "Enter your name", width = "300px"),
+      textInput("journal_name", strong("Journal"), placeholder = "Enter journal name", width = "300px"),
       shinyWidgets::awesomeCheckboxGroup(
         inputId = "stage_checks",
         label = strong("Select DCQC Review Stages"), 
@@ -116,6 +118,15 @@ server <- function(input, output, session) {
         "<p>",
         "<b>Name:</b>",
         input$reviewer_name,
+        "</p>"
+      ))
+    })
+
+      output$journal_name_output <- shiny::renderUI({
+      shiny::HTML(paste(
+        "<p>",
+        "<b>Journal:</b>",
+        input$journal_name,
         "</p>"
       ))
     })
