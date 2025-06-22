@@ -1,15 +1,13 @@
 server <- function(input, output, session) {
- 
   output$download_DCQCpdf <- shiny::downloadHandler(
     filename = function() {
       paste0("DCQC_Report_", input$paper_title, "_", input$reviewer_name, ".pdf")
     },
-    
     content = function(file) {
       template_path <- system.file("rmd", "DCQC_report.Rmd", package = "shinyDCQC")
       tempReport <- file.path(tempdir(), "DCQC_report.Rmd")
       file.copy(template_path, tempReport, overwrite = TRUE)
-    
+
       card_data <- lapply(names(card_labels), function(id) {
         response <- input[[paste0("check_", id)]]
         comment <- input[[paste0("item_", id, "_comment")]]
@@ -24,9 +22,9 @@ server <- function(input, output, session) {
           NULL
         }
       })
-    
+
       card_data <- Filter(Negate(is.null), card_data)
-      
+
       params <- list(
         paper_title = input$paper_title,
         reviewer_name = input$reviewer_name,
@@ -34,7 +32,7 @@ server <- function(input, output, session) {
         report_date = Sys.Date(),
         card_data = card_data
       )
-      
+
       rmarkdown::render(
         input = tempReport,
         output_file = file,
@@ -43,9 +41,9 @@ server <- function(input, output, session) {
       )
     }
   )
-  
-  
-  
+
+
+
   data_modal <- shiny::modalDialog(
     easyClose = FALSE,
     footer = NULL,
@@ -54,17 +52,21 @@ server <- function(input, output, session) {
     shiny::div(
       style = "display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;",
       shiny::tags$img(src = "circle_black.png", height = "88px", width = "88px", style = "margin-bottom: 20px;"),
-      textInput("paper_title", strong("Paper Title"), placeholder = "Enter paper name", width = "300px"),
-      textInput("reviewer_name", strong("Reviewer Name"), placeholder = "Enter your name", width = "300px"),
-      textInput("journal_name", strong("Journal"), placeholder = "Enter journal name", width = "300px"),
+      br(),
+      textInput("paper_title", tags$b("Paper Title"), placeholder = "Enter paper name", width = "300px"),
+      textInput("reviewer_name", tags$b("Reviewer Name"), placeholder = "Enter your name", width = "300px"),
+      textInput("journal_name", tags$b("Journal"), placeholder = "Enter journal name", width = "300px"),
+      br(),
+      br(),
       shinyWidgets::awesomeCheckboxGroup(
         inputId = "stage_checks",
-        label = strong("Select DCQC Review Stages"), 
+        label = tags$b("Select DCQC Review Stages"),
         choices = paste("Stage", 1:6),
         selected = character(0),
-        inline = TRUE, 
+        inline = TRUE,
         status = "success"
       ),
+      shiny::htmlOutput("Stage_guides"),
       actionButton("submit_data_modal", "Submit", class = "btn btn-success", style = "margin-top: 20px;")
     )
   )
@@ -74,7 +76,7 @@ server <- function(input, output, session) {
   shinyjs::hide("stage4_title")
   shinyjs::hide("stage5_title")
   shinyjs::hide("stage6_title")
-  
+
   shinyjs::hide("1")
   shinyjs::hide("2")
   shinyjs::hide("3")
@@ -99,20 +101,19 @@ server <- function(input, output, session) {
   shinyjs::hide("22")
   shinyjs::hide("23")
   shinyjs::hide("review_summary")
-  shinyjs::hide("download_card")
+  shinyjs::hide("download_DCQCpdf")
   shiny::showModal(data_modal)
-  
+
   shiny::observeEvent(input$submit_data_modal, {
-     
     output$paper_title_output <- shiny::renderUI({
       shiny::HTML(paste(
-      "<p>",
-      "<b>Title:</b>",
-      input$paper_title,
-      "</p>"
+        "<p>",
+        "<b>Title:</b>",
+        input$paper_title,
+        "</p>"
       ))
     })
-    
+
     output$reviewer_name_output <- shiny::renderUI({
       shiny::HTML(paste(
         "<p>",
@@ -122,7 +123,7 @@ server <- function(input, output, session) {
       ))
     })
 
-      output$journal_name_output <- shiny::renderUI({
+    output$journal_name_output <- shiny::renderUI({
       shiny::HTML(paste(
         "<p>",
         "<b>Journal:</b>",
@@ -130,11 +131,11 @@ server <- function(input, output, session) {
         "</p>"
       ))
     })
-    
-    if("Stage 1" %in% input$stage_checks){
-      shiny::removeModal() 
+
+    if ("Stage 1" %in% input$stage_checks) {
+      shiny::removeModal()
       shinyjs::show("review_summary")
-      shinyjs::show("download_card")
+      shinyjs::show("download_DCQCpdf")
       shinyjs::show("stage1_title")
       shinyjs::show("1")
       shinyjs::show("2")
@@ -146,20 +147,20 @@ server <- function(input, output, session) {
       shinyjs::show("8")
       shinyjs::show("9")
     }
-    
-    if("Stage 2" %in% input$stage_checks){
-      shiny::removeModal() 
+
+    if ("Stage 2" %in% input$stage_checks) {
+      shiny::removeModal()
       shinyjs::show("review_summary")
-      shinyjs::show("download_card")
+      shinyjs::show("download_DCQCpdf")
       shinyjs::show("stage2_title")
       shinyjs::show("10")
       shinyjs::show("11")
-    } 
-    
-    if("Stage 3" %in% input$stage_checks){
-      shiny::removeModal() 
+    }
+
+    if ("Stage 3" %in% input$stage_checks) {
+      shiny::removeModal()
       shinyjs::show("review_summary")
-      shinyjs::show("download_card")
+      shinyjs::show("download_DCQCpdf")
       shinyjs::show("stage3_title")
       shinyjs::show("12")
       shinyjs::show("13")
@@ -170,52 +171,71 @@ server <- function(input, output, session) {
       shinyjs::show("18")
       shinyjs::show("19")
     }
-    
-    if("Stage 4" %in% input$stage_checks){
-      shiny::removeModal() 
+
+    if ("Stage 4" %in% input$stage_checks) {
+      shiny::removeModal()
       shinyjs::show("review_summary")
-      shinyjs::show("download_card")
+      shinyjs::show("download_DCQCpdf")
       shinyjs::show("stage4_title")
       shinyjs::show("20")
     }
-      
-    if("Stage 5" %in% input$stage_checks){
-      shiny::removeModal() 
+
+    if ("Stage 5" %in% input$stage_checks) {
+      shiny::removeModal()
       shinyjs::show("review_summary")
-      shinyjs::show("download_card")
+      shinyjs::show("download_DCQCpdf")
       shinyjs::show("stage5_title")
       shinyjs::show("21")
     }
-    
-    if("Stage 6" %in% input$stage_checks){
-      shiny::removeModal() 
+
+    if ("Stage 6" %in% input$stage_checks) {
+      shiny::removeModal()
       shinyjs::show("review_summary")
-      shinyjs::show("download_card")
+      shinyjs::show("download_DCQCpdf")
       shinyjs::show("stage6_title")
       shinyjs::show("22")
       shinyjs::show("23")
     }
-    
-    if(length(input$stage_checks) == 0){
-    shinyalert::shinyalert(
-      title = "Select a stage to review",
-      text = "No stage selected",
-      size = "s", 
-      closeOnEsc = TRUE,
-      closeOnClickOutside = FALSE,
-      html = FALSE,
-      type = "error",
-      showConfirmButton = TRUE,
-      showCancelButton = FALSE,
-      confirmButtonText = "OK",
-      confirmButtonCol = "#AEDEF4",
-      timer = 0,
-      imageUrl = "",
-      animation = TRUE
-    )
+
+    if (length(input$stage_checks) == 0) {
+      shinyalert::shinyalert(
+        title = "Select a stage to review",
+        text = "No stage selected",
+        size = "s",
+        closeOnEsc = TRUE,
+        closeOnClickOutside = FALSE,
+        html = FALSE,
+        type = "error",
+        showConfirmButton = TRUE,
+        showCancelButton = FALSE,
+        confirmButtonText = "OK",
+        confirmButtonCol = "#AEDEF4",
+        timer = 0,
+        imageUrl = "",
+        animation = TRUE
+      )
     }
-    
   })
-  
-  
+
+  shiny::observe({
+    if (all(c("Stage 1", "Stage 2") %in% input$stage_checks) &&
+      !any(c("Stage 3", "Stage 4", "Stage 5", "Stage 6") %in% input$stage_checks)) {
+      output$Stage_guides <- renderUI({
+        HTML("<div style='font-size: 22px; font-weight: bold; margin-top: 10px;'>Data Reuse</div>")
+      })
+    } else if (all(c("Stage 1", "Stage 2", "Stage 3", "Stage 4") %in% input$stage_checks) &&
+      !any(c("Stage 5", "Stage 6") %in% input$stage_checks)) {
+      output$Stage_guides <- renderUI({
+        HTML("<div style='font-size: 22px; font-weight: bold; margin-top: 10px;'>Transparency</div>")
+      })
+    } else if (all(c("Stage 1", "Stage 2", "Stage 3", "Stage 4", "Stage 5", "Stage 6") %in% input$stage_checks)) {
+      output$Stage_guides <- renderUI({
+        HTML("<div style='font-size: 22px; font-weight: bold; margin-top: 10px;'>Computational Reproducibility</div>")
+      })
+    } else {
+      output$Stage_guides <- renderUI({
+        NULL
+      })
+    }
+  })
 }

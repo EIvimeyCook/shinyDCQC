@@ -43,12 +43,7 @@ ui <- function() {
             shiny::htmlOutput("journal_name_output")
           )
           ),
-          bslib::card(
-            id = "download_card",
-            shiny::div(
-              shiny::downloadButton("download_DCQCpdf", "Download PDF Report",class = "btn-info")
-          )
-          ) 
+          shiny::downloadButton("download_DCQCpdf", "Download PDF Report",class = "btn-info")
         ),
       div(id = "stage1_title",
       h4("Stage 1: Data and metadata must be archived and adhere to FAIR guiding principles")
