@@ -25,10 +25,14 @@ server <- function(input, output, session) {
 
       card_data <- Filter(Negate(is.null), card_data)
 
+      paper_title <- if (input$paper_title == "") "No Title Given" else input$paper_title
+      reviewer_name <- if (input$reviewer_name == "") "No Name Given" else input$reviewer_name
+      journal_name <- if (input$journal_name == "") "No Journal Given" else input$journal_name
+      
       params <- list(
-        paper_title = input$paper_title,
-        reviewer_name = input$reviewer_name,
-        journal_name = input$journal_name,
+        paper_title = paper_title,
+        reviewer_name = reviewer_name,
+        journal_name = journal_name,
         report_date = Sys.Date(),
         card_data = card_data
       )
@@ -105,31 +109,56 @@ server <- function(input, output, session) {
   shiny::showModal(data_modal)
 
   shiny::observeEvent(input$submit_data_modal, {
+    
     output$paper_title_output <- shiny::renderUI({
+      if(input$paper_title == ""){
+        shiny::HTML(paste(
+          "<p>",
+          "<b>Title:</b> No Title Given",
+          "</p>"
+        ))
+      } else(
       shiny::HTML(paste(
         "<p>",
         "<b>Title:</b>",
         input$paper_title,
         "</p>"
       ))
+      )
     })
 
     output$reviewer_name_output <- shiny::renderUI({
+      if(input$reviewer_name == ""){
+        shiny::HTML(paste(
+          "<p>",
+          "<b>Name:</b> No Name Given",
+          "</p>"
+        ))
+      } else(
       shiny::HTML(paste(
         "<p>",
         "<b>Name:</b>",
         input$reviewer_name,
         "</p>"
       ))
+      )
     })
 
     output$journal_name_output <- shiny::renderUI({
+      if(input$journal_name == ""){
+        shiny::HTML(paste(
+          "<p>",
+          "<b>Journal:</b> No Journal Given",
+          "</p>"
+        ))
+      } else(
       shiny::HTML(paste(
         "<p>",
         "<b>Journal:</b>",
         input$journal_name,
         "</p>"
       ))
+      )
     })
 
     if ("Stage 1" %in% input$stage_checks) {

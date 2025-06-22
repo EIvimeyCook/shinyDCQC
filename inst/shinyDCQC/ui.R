@@ -6,7 +6,7 @@ ui <- function() {
       version = 5,
       base_font = bslib::font_collection(bslib::font_google("Atkinson Hyperlegible"), "Arial Narrow Bold", "sans-serif"),
       code_font = bslib::font_collection(bslib::font_google("Atkinson Hyperlegible"), "Arial Narrow Bold", "sans-serif"),
-     bootswatch = "materia"
+     bootswatch = "zephyr"
     ),
     
     shinyjs::useShinyjs(),
