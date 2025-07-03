@@ -43,7 +43,7 @@ ui <- function() {
             shiny::htmlOutput("journal_name_output")
           )
           ),
-          shiny::downloadButton("download_DCQCpdf", "Download PDF Report",class = "btn-info")
+          shiny::downloadButton("download_DCQCpdf", "Download Text Report",class = "btn-info")
         ),
       div(id = "stage1_title",
       h4("Stage 1: Data and metadata must be archived and adhere to FAIR guiding principles")
@@ -64,6 +64,11 @@ ui <- function() {
       br(),
       create_card("9", "Metadata adequate (including README file)"),
       br(),
+      div(id = "comments_1",
+          h4("Addtional comments")
+      ),
+      create_card_comment("1a", "Comments"),
+      br(),
       br(),
       div(id = "stage2_title",
       h4("Stage 2: Archived data corresponds with the data reported in the manuscript")
@@ -71,6 +76,11 @@ ui <- function() {
       create_card("10", "Variables used in analysis present in the data"),
       br(),
       create_card("11", "The structure of the data presented matches the manuscript (e.g., it is the right size, do the number of levels of a factor match)"),
+      br(),
+      div(id = "comments_2",
+          h4("Addtional comments")
+      ),
+      create_card_comment("2a", "Comments"),
       br(),
       br(),
       div(id = "stage3_title",
@@ -92,11 +102,21 @@ ui <- function() {
       br(),
       create_card("19", "Metadata adequate"),
       br(),
+      div(id = "comments_3",
+          h4("Addtional comments")
+      ),
+      create_card_comment("3a", "Comments"),
+      br(),
       br(),
       div(id = "stage4_title",
       h4("Stage 4: Archived code matches the manuscript")
       ),
       create_card("20", "Code is present for all analyses in the manuscript, along with code used to produce figures/tables where appropriate"),
+      br(),
+      div(id = "comments_4",
+          h4("Addtional comments")
+      ),
+      create_card_comment("4a", "Comments"),
       br(),
       br(),
       div(id = "stage5_title",
@@ -104,13 +124,25 @@ ui <- function() {
       ),
       create_card("21", "Runs with minimal changes (e.g.changing file paths)"),
       br(),
+      div(id = "comments_5",
+          h4("Addtional comments")
+      ),
+      create_card_comment("5a", "Comments"),
+      br(),
       br(),
       div(id = "stage6_title",
       h4("Stage 6: Results can be computationally reproduced by running the archived code")
       ),
       create_card("22", "Numeric results (in table or text)"),
       br(),
-      create_card("23", "Figures")
+      create_card("23", "Figures"),
+      br(),
+      div(id = "comments_6",
+          h4("Addtional comments")
+      ),
+      create_card_comment("6a", "Comments"),
+      br(),
+      br(),
     )
     )
 }

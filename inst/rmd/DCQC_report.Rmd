@@ -2,7 +2,7 @@
 title: "DCQC Quality Checklist Report"
 author: "`r params$reviewer_name`"
 date: "`r format(params$report_date, '%d %B %Y')`"
-output: pdf_document
+output: rtf_document
 params:
   paper_title: "Example Paper"
   reviewer_name: "Example Reviewer"

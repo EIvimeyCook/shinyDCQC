@@ -7,7 +7,7 @@ create_card <- function(id, label) {
       shinyWidgets::radioGroupButtons(
         inputId = paste0("check_", id),
         label = NULL,
-        choices = c("Yes", "No", "Other"),
+        choices = c("Yes", "No"),
         justified = TRUE,
         individual = TRUE,
         selected = character(0)
@@ -16,7 +16,7 @@ create_card <- function(id, label) {
         inputId = paste0("item_", id, "_comment"),
         label = NULL,
         placeholder = "Comment",
-        width = "1200px",
+        width = "1500px",
         height = "50px"
       )
   )
@@ -46,3 +46,17 @@ create_card <- function(id, label) {
   "22" = "Numeric results (in table or text)",
   "23" = "Figures"
 )
+  
+  create_card_comment <- function(id, label) {
+    div(
+      id = id,
+      label = NULL,
+      textAreaInput(
+        inputId = paste0("item_", id, "_comment"),
+        label = NULL,
+        placeholder = "Comment",
+        width = "1500px",
+        height = "50px"
+      )
+    )
+  }

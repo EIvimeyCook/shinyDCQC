@@ -1,7 +1,8 @@
 server <- function(input, output, session) {
+  
   output$download_DCQCpdf <- shiny::downloadHandler(
     filename = function() {
-      paste0("DCQC_Report_", input$paper_title, "_", input$reviewer_name, ".pdf")
+      paste0("DCQC_Report_", input$paper_title, "_", input$reviewer_name, ".rtf")
     },
     content = function(file) {
       template_path <- system.file("rmd", "DCQC_report.Rmd", package = "shinyDCQC")
@@ -80,6 +81,12 @@ server <- function(input, output, session) {
   shinyjs::hide("stage4_title")
   shinyjs::hide("stage5_title")
   shinyjs::hide("stage6_title")
+  shinyjs::hide("comments_1")
+  shinyjs::hide("comments_2")
+  shinyjs::hide("comments_3")
+  shinyjs::hide("comments_4")
+  shinyjs::hide("comments_5")
+  shinyjs::hide("comments_6")
 
   shinyjs::hide("1")
   shinyjs::hide("2")
@@ -104,6 +111,12 @@ server <- function(input, output, session) {
   shinyjs::hide("21")
   shinyjs::hide("22")
   shinyjs::hide("23")
+  shinyjs::hide("1a")
+  shinyjs::hide("2a")
+  shinyjs::hide("3a")
+  shinyjs::hide("4a")
+  shinyjs::hide("5a")
+  shinyjs::hide("6a")
   shinyjs::hide("review_summary")
   shinyjs::hide("download_DCQCpdf")
   shiny::showModal(data_modal)
@@ -175,6 +188,8 @@ server <- function(input, output, session) {
       shinyjs::show("7")
       shinyjs::show("8")
       shinyjs::show("9")
+      shinyjs::show("comments_1")
+      shinyjs::show("1a")
     }
 
     if ("Stage 2" %in% input$stage_checks) {
@@ -184,6 +199,8 @@ server <- function(input, output, session) {
       shinyjs::show("stage2_title")
       shinyjs::show("10")
       shinyjs::show("11")
+      shinyjs::show("comments_2")
+      shinyjs::show("2a")
     }
 
     if ("Stage 3" %in% input$stage_checks) {
@@ -199,6 +216,8 @@ server <- function(input, output, session) {
       shinyjs::show("17")
       shinyjs::show("18")
       shinyjs::show("19")
+      shinyjs::show("comments_3")
+      shinyjs::show("3a")
     }
 
     if ("Stage 4" %in% input$stage_checks) {
@@ -207,6 +226,8 @@ server <- function(input, output, session) {
       shinyjs::show("download_DCQCpdf")
       shinyjs::show("stage4_title")
       shinyjs::show("20")
+      shinyjs::show("comments_4")
+      shinyjs::show("4a")
     }
 
     if ("Stage 5" %in% input$stage_checks) {
@@ -215,6 +236,8 @@ server <- function(input, output, session) {
       shinyjs::show("download_DCQCpdf")
       shinyjs::show("stage5_title")
       shinyjs::show("21")
+      shinyjs::show("comments_5")
+      shinyjs::show("5a")
     }
 
     if ("Stage 6" %in% input$stage_checks) {
@@ -224,6 +247,8 @@ server <- function(input, output, session) {
       shinyjs::show("stage6_title")
       shinyjs::show("22")
       shinyjs::show("23")
+      shinyjs::show("comments_6")
+      shinyjs::show("6a")
     }
 
     if (length(input$stage_checks) == 0) {
@@ -255,11 +280,11 @@ server <- function(input, output, session) {
     } else if (all(c("Stage 1", "Stage 2", "Stage 3", "Stage 4") %in% input$stage_checks) &&
       !any(c("Stage 5", "Stage 6") %in% input$stage_checks)) {
       output$Stage_guides <- renderUI({
-        HTML("<div style='font-size: 22px; font-weight: bold; margin-top: 10px;'>Transparency</div>")
+        HTML("<div style='font-size: 22px; font-weight: bold; margin-top: 10px;'>Data Reuse & Transparency</div>")
       })
     } else if (all(c("Stage 1", "Stage 2", "Stage 3", "Stage 4", "Stage 5", "Stage 6") %in% input$stage_checks)) {
-      output$Stage_guides <- renderUI({
-        HTML("<div style='font-size: 22px; font-weight: bold; margin-top: 10px;'>Computational Reproducibility</div>")
+      output$Stage_guides <- renderUI({s
+        HTML("<div style='font-size: 22px; font-weight: bold; margin-top: 10px;'>Data Reuse, Transparency, & Computational Reproducibility</div>")
       })
     } else {
       output$Stage_guides <- renderUI({
